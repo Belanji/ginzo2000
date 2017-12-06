@@ -40,9 +40,6 @@ int main(int argc, char **argv)
   divisors[stride_column_1]=stride;
   divisors[stride_column_2]=stride;
   
-  printf("plane=%d  stride=%d  stride=%d\n\n",plane_column,stride_column_1,stride_column_2);
-  
-  
   
   ic_file=fopen(file_to_slice,"r");
   printf("x,y,z,nx,ny,nz,lx,ly,lz,S,P\n");
