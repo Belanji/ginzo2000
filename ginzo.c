@@ -5,8 +5,8 @@ void read_check(int read_status, int line);
 
 int main(int argc, char **argv)
 {
-  int x[3], lmin, lmax;
-  int comparison_column;
+  int x[3], lmin, lmax, stride, stride_1,divisors[3];
+  int plane_column, stride_column_1, stride_column_2;
   double n[3],l[3],m[3],S,P;	
   FILE * ic_file; 
   char *file_to_slice, string_placeholder[400];
@@ -17,20 +17,33 @@ int main(int argc, char **argv)
 
 
 
-  if ( argc<5 || argc >5 )
+  if ( argc<6 || argc >6 )
     {
 
-      printf(" Usage:\n\n ginzo2000 comparison_column min_value max_value file_to_cut.\n\n");
+      printf(" Usage:\n\n ginzo2000 planetocut min_value max_value stride file_to_cut.\n\n");
       printf("planetocut: integer represententing the plane (yz=1,xz=2 and yx=3).\n");
 
     }
 
-  comparison_column=atoi(argv[1]);
+  plane_column=atoi(argv[1]);
   lmin=atoi(argv[2]);
   lmax=atoi(argv[3]);
-  file_to_slice=argv[4];
+  stride=atoi(argv[4]);
+  file_to_slice=argv[5];
 
 
+  stride_column_1=(plane_column+1)%3;
+  stride_column_2=(plane_column+2)%3;
+
+
+  divisors[plane_column]=1;
+  divisors[stride_column_1]=stride;
+  divisors[stride_column_2]=stride;
+  
+  printf("plane=%d  stride=%d  stride=%d\n\n",plane_column,stride_column_1,stride_column_2);
+  
+  
+  
   ic_file=fopen(file_to_slice,"r");
   printf("x,y,z,nx,ny,nz,lx,ly,lz,S,P\n");
 
@@ -58,11 +71,16 @@ int main(int argc, char **argv)
       read_check(read_status,reading_line);
 
 
-      if( lmin < x[comparison_column] && x[comparison_column] < lmax )
+      if( lmin < x[plane_column] && x[plane_column] < lmax )
 	{
-		  
-	  printf("%d,%d,%d,%.3lf,%.3lf,%.3lf,%.3lf,%.3lf,%.3lf,%.3lf,%.3lf\n", x[0],x[1],x[2], n[0], n[1], n[2], l[0], l[1], l[2],S, P);
-
+	  if( x[stride_column_1]%stride ==0)
+	    {
+	      if( x[stride_column_2]%stride ==0)
+		{
+	      
+		  printf("%d,%d,%d,%.3lf,%.3lf,%.3lf,%.3lf,%.3lf,%.3lf,%.3lf,%.3lf\n", x[0]/divisors[0],x[1]/divisors[1],x[2]/divisors[2], n[0], n[1], n[2], l[0], l[1], l[2],S, P);
+		}
+	    }
 	}
       reading_line++;
 
