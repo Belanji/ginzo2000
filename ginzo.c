@@ -22,7 +22,7 @@ int main(int argc, char **argv)
 
       printf(" Usage:\n\n ginzo2000 planetocut min_value max_value stride file_to_cut.\n\n");
       printf("planetocut: integer represententing the plane (yz=1,xz=2 and yx=3).\n");
-
+      exit(0);
     }
 
   plane_column=atoi(argv[1]);

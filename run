@@ -1,0 +1,6 @@
+#!/bin/bash
+
+rm ginzo2000
+gcc ginzo.c -o ginzo2000 
+
+ginzo2000 2 23 25  5 director_field_1.csv
