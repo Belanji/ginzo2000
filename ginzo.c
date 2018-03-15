@@ -17,11 +17,11 @@ int main(int argc, char **argv)
 
 
 
-  if ( argc<6 || argc >6 )
+  if ( argc< 6 || argc> 6 )
     {
 
       printf(" Usage:\n\n ginzo2000 planetocut min_value max_value stride file_to_cut.\n\n");
-      printf("planetocut: integer represententing the plane (yz=1,xz=2 and yx=3).\n");
+      printf("planetocut: integer represententing the plane (yz=0,xz=1 and yx=2).\n");
       exit(0);
     }
 
